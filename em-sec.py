@@ -17,7 +17,7 @@ logging.getLogger("streamlit.runtime.scriptrunner.script_runner").setLevel(loggi
 PORT = "8502"
 USERS_TRACKER = "active_staff.txt"
 TUNNEL_FILE = "tunnel_url.txt"
-PASSWORD = ""  # اتركها فارغة كما كانت أو ضع كلمة مرور
+PASSWORD = "12"  # اتركها فارغة كما كانت أو ضع كلمة مرور
 
 try:
     import qrcode
@@ -921,7 +921,7 @@ if 'streamlit' in sys.modules:
         buf = BytesIO()
         img.save(buf, format="PNG")
 
-        st.image(buf.getvalue(), caption="امسح الكود للدخول من الهاتف")
+        st.image(buf.getvalue(), caption="Scan & Share")
         if st.button("🚪 تسجيل الخروج الآمن", use_container_width=True):
             st.session_state.authenticated = False
             st.rerun()
@@ -931,21 +931,21 @@ if 'streamlit' in sys.modules:
         st.session_state.authenticated = False
 
     if not st.session_state.authenticated:
-        st.title("🏥 نظام طوارئ مستشفى بغداد التعليمي")
+        st.title("🏥 قسم الطوارئ \ مستشفى بغداد التعليمي")
         with st.form("login"):
-            pwd = st.text_input("أدخل كلمة المرور الطبية", type="password")
-            if st.form_submit_button("دخول للنظام"):
+            pwd = st.text_input("أدخل كلمة المرور", type="password")
+            if st.form_submit_button("الدخول"):
                 if pwd == PASSWORD:
                     st.session_state.authenticated = True
                     st.rerun()
                 else:
-                    st.error("كلمة المرor غير صحيحة")
+                    st.error("كلمة المرور غير صحيحة")
         st.stop()
 
     # --- محتوى الصفحة الرئيسي ---
     if "current_page" not in st.session_state: st.session_state.current_page = "Triage Home"
 
-    st.title("🏥 لوحة التحكم في الطوارئ / مستشفى بغداد التعليمي")
+    st.title("🏥 قسم الطوارئ / مستشفى بغداد التعليمي")
     m1, m2, m3 = st.columns(3)
     if m1.button("🏠 Triage Home", use_container_width=True): st.session_state.current_page = "Triage Home"
     if m2.button("💊 Pharmacy", use_container_width=True): st.session_state.current_page = "Pharmacy"

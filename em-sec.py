@@ -900,36 +900,28 @@ if 'streamlit' in sys.modules:
         div[data-testid="stExpander"] { border: 1px solid #333333; border-radius: 6px; background-color: #1A1D24; margin-bottom: 8px; }
         </style>
         """, unsafe_allow_html=True)
+    # الرابط الخاص بك
+    APP_URL = "https://emergency-system-7pn2jhzpumphv7gt4ts44w.streamlit.app/"
 
-    # --- الشريط الجانبي (Sidebar) المحدث ---
+    # --- داخل الـ Sidebar ---
     with st.sidebar:
         st.header("⚙️ لوحة التحكم")
 
-        # [1] عداد المتصلين
-        count = get_active_count()
-        st.metric(label="عدد المتصلين بالشبكة الآن", value=f"{count} مستخدم")
+        st.success("🔗 رابط الوصول:")
+        st.code(APP_URL, language=None)
 
-        st.markdown("---")
+        # توليد الـ QR كود بناءً على الرابط الثابت
+        qr = qrcode.QRCode(version=1, box_size=8, border=2)
+        qr.add_data(APP_URL)
+        qr.make(fit=True)
 
-        # [2] مشاركة الكود QR ورابط النفق
-        if os.path.exists(TUNNEL_FILE):
-            with open(TUNNEL_FILE, "r", encoding="utf-8") as f:
-                active_url = f.read().strip()
+        # اختيار الألوان للـ QR (اختياري)
+        img = qr.make_image(fill_color="black", back_color="white")
 
-            st.success("🔗 رابط الوصول الخارجي:")
-            st.code(active_url, language=None)
+        buf = BytesIO()
+        img.save(buf, format="PNG")
 
-            if HAS_QR:
-                qr = qrcode.QRCode(version=1, box_size=10, border=2)
-                qr.add_data(active_url)
-                qr.make(fit=True)
-                img = qr.make_image(fill_color="black", back_color="white")
-                buf = BytesIO()
-                img.save(buf, format="PNG")
-                st.image(buf.getvalue(), caption="امسح الكود للمشاركة عبر الهاتف")
-        else:
-            st.info("⏳ جاري استخراج رابط النفق...")
-
+        st.image(buf.getvalue(), caption="امسح الكود للدخول من الهاتف")
         if st.button("🚪 تسجيل الخروج الآمن", use_container_width=True):
             st.session_state.authenticated = False
             st.rerun()
@@ -1182,49 +1174,50 @@ if 'streamlit' in sys.modules:
         st.header(" Real-Time Laboratory Test Management & Interpretation System")
 
 
-        # Function to handle real-time interpretation within full-width expander cards
         def render_pure_test_card(test_name):
-            # Attempt to retrieve configuration from global or local scopes
-            config = LAB_TESTS_CONFIG.get(
-                test_name) if 'LAB_TESTS_CONFIG' in globals() or 'LAB_TESTS_CONFIG' in locals() else None
-
-            # 🚨 Safety Catch: If the test profile is missing from the config dict, raise a clean alert
-            if config is None:
-                st.warning(
-                    f"⚠️ Alert: Configuration settings for test profile named exactly `{test_name}` were not found inside LAB_TESTS_CONFIG. Please verify string spelling.")
-                return
-
+            config = LAB_TESTS_CONFIG.get(test_name)
             interpretation = LAB_INTERPRETATION_GUIDE.get(test_name, {
-                "Overview": "No clinical overview available.",
-                "High": "Assess clinically for elevated values.",
-                "Low": "Assess clinically for diminished values."
+                "Overview": "لا توجد تفاصيل سريرية متاحة.",
+                "High": "لم تُحدد احتمالات للارتفاع.",
+                "Low": "لم تُحدد احتمالات للانخفاض."
             })
 
-            # Structured expander header acting as the interactive drop-down interface
-            expander_title = f" {test_name}  |  📊 Reference Range: {config.get('min', 0)} - {config.get('max', 0)} {config.get('unit', '')}"
+            if config is None:
+                return
 
-            with st.expander(expander_title, expanded=False):
-                # Display clinical summary inside the dropdown menu
-                st.markdown(f"**<u>💡 Clinical Overview:</u>** {interpretation['Overview']}", unsafe_allow_html=True)
+            with st.expander(f"🔬 {test_name}", expanded=False):
+                # 1. النبذة السريرية في الأعلى وبشكل واضح جداً
+                st.markdown(f"""
+                <div style="background-color: #262730; padding: 15px; border-radius: 10px; border-left: 5px solid #4CAF50;">
+                    <h4 style="margin: 0; color: #4CAF50;">💡 Informations :</h4>
+                    <p style="margin: 5px 0 0 0; font-size: 16px;">{interpretation['Overview']}</p>
+                </div>
+                """, unsafe_allow_html=True)
 
-                # Isolated numerical input field utilizing a unique functional key
-                res_val = st.number_input(
-                    f"Enter current laboratory result value ({config.get('unit', '')}):",
-                    value=float(config.get('min', 0.0)),
-                    step=0.01,
-                    format="%.2f",
-                    key=f"pure_input_{test_name}"
-                )
+                st.write("")  # مسافة إضافية
 
-                # Instant real-time diagnostic triage based on inputted values
-                if res_val > config.get('max', 0):
-                    st.error(f" {interpretation['High']}")
-                elif res_val < config.get('min', 0):
-                    st.warning(f"⚠️ {interpretation['Low']}")
-                else:
-                    st.success("✅ **Result is within the safe established Reference Range (Normal).**")
+                # 2. النطاق الطبيعي
+                st.info(
+                    f" **NORMAL:** {config.get('min', 0)} - {config.get('max', 0)} {config.get('unit', '')}")
 
 
+                col1, col2 = st.columns(2)
+
+                with col1:
+                    st.markdown(f"""
+                            <div style="background-color: #8B0000; padding: 12px; border-radius: 10px; color: white;">
+                                <h4 style="color: #FFC0CB; margin-top: 0; margin-bottom: 5px; font-size: 16px;">🔼 HIGH:</h4>
+                                <p style="color: white; font-weight: 400; font-size: 14px; margin: 0;">{interpretation['High']}</p>
+                            </div>
+                            """, unsafe_allow_html=True)
+
+                with col2:
+                    st.markdown(f"""
+                            <div style="background-color: #00008B; padding: 12px; border-radius: 10px; color: white;">
+                                <h4 style="color: #ADD8E6; margin-top: 0; margin-bottom: 5px; font-size: 16px;">🔽 LOW:</h4>
+                                <p style="color: white; font-weight: 400; font-size: 14px; margin: 0;">{interpretation['Low']}</p>
+                            </div>
+                            """, unsafe_allow_html=True)
         # Distribute the diagnostic profiles across five full-width open specialist tabs
         sub_tab_hematology, sub_tab_renal, sub_tab_cardiac, sub_tab_abg, sub_tab_liver = st.tabs([
             "🩸 Hematology & Coagulation",
@@ -1281,5 +1274,6 @@ if 'streamlit' in sys.modules:
 # [5] نقطة انطلاق النظام (Main)
 # ==============================================================================
 if __name__ == "__main__":
-    if 'streamlit' not in sys.modules:
+    # تشغيل النفق فقط إذا لم يكن السكربت مشغلاً بواسطة streamlit
+    if "streamlit" not in sys.modules:
         run_streamlit_and_tunnel()

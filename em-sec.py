@@ -931,6 +931,7 @@ if 'streamlit' in sys.modules:
         st.session_state.authenticated = False
 
     if not st.session_state.authenticated:
+
         with st.form("login"):
             pwd = st.text_input("أدخل كلمة المرور", type="password")
             if st.form_submit_button("الدخول"):
@@ -942,21 +943,21 @@ if 'streamlit' in sys.modules:
         st.stop()
 
     # --- محتوى الصفحة الرئيسي ---
-    if "current_page" not in st.session_state: st.session_state.current_page = "Triage Home"
+    if "current_page" not in st.session_state: st.session_state.current_page = "Common Conditions"
 
     st.title("🏥 قسم الطوارئ / مستشفى بغداد التعليمي")
     m1, m2, m3 = st.columns(3)
-    if m1.button("🏠 Triage Home", use_container_width=True): st.session_state.current_page = "Triage Home"
+    if m1.button("🏠 Common Conditions", use_container_width=True): st.session_state.current_page = "Common Conditions"
     if m2.button("💊 Pharmacy", use_container_width=True): st.session_state.current_page = "Pharmacy"
     if m3.button("🔬 Laboratory", use_container_width=True): st.session_state.current_page = "Laboratory"
     st.write("---")
 
     # ==============================================================================
-    # ------------------------Triage Home---------------------------
+    # ------------------------Common Emergency Conditions Home---------------------------
     # ==============================================================================
 
-    if st.session_state.current_page == "Triage Home":
-        st.header("🚑 Acute Emergency Triage & Immediate Management System")
+    if st.session_state.current_page == "Common Conditions":
+        st.header("🚑 Common Conditions & Immediate Management System")
 
 
         # Function to handle and render full-width horizontal expander cards
@@ -1198,7 +1199,6 @@ if 'streamlit' in sys.modules:
                 # 2. النطاق الطبيعي
                 st.info(
                     f" **NORMAL:** {config.get('min', 0)} - {config.get('max', 0)} {config.get('unit', '')}")
-
 
                 col1, col2 = st.columns(2)
 

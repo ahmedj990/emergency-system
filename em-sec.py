@@ -931,7 +931,6 @@ if 'streamlit' in sys.modules:
         st.session_state.authenticated = False
 
     if not st.session_state.authenticated:
-        st.title("🏥 قسم الطوارئ \ مستشفى بغداد التعليمي")
         with st.form("login"):
             pwd = st.text_input("أدخل كلمة المرور", type="password")
             if st.form_submit_button("الدخول"):

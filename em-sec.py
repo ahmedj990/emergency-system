@@ -100,6 +100,26 @@ EMERGENCY_CASES_DB = {
         "Immediate First Action": "• **FIRST-LINE LIFE-SAVING INTERVENTION:** Administer Epinephrine (Adrenaline) 1:1000 dilution at a dose of 0.3–0.5mg intramuscularly (IM) into the anterolateral mid-thigh.\n• Place the patient supine with legs elevated to optimize cerebral perfusion and combat distributive shock.",
         "Clinical Work Protocol": "• Secure the airway; prepare for immediate endotracheal intubation or surgical airway if laryngeal edema or stridor develops.\n• Rapidly infuse massive volumes of IV crystalloids to support blood pressure.\n• Administer secondary adjunctive therapies: IV Antihistamines (H1 and H2 blockers) and IV Corticosteroids.",
         "Critical Contraindications": "⚠️ Never delay intramuscular Epinephrine administration; delayed IM epinephrine is the primary cause of anaphylaxis fatalities. Do not administer undiluted Epinephrine 1:1000 via direct IV push outside of cardiac arrest."
+    },
+    "Upper Gastrointestinal Bleed (UGIB)": {
+        "Immediate First Action": "• Assess hemodynamics: Place two large-bore IVs. Keep patient NPO. Secure airway if massive hematemesis.",
+        "Clinical Work Protocol": "• Initiate IV PPI (e.g., Pantoprazole 80mg or Omeprazole 80mg or Esomeprazole 80mg bolus). Start Octreotide if variceal bleed suspected. Correct coagulopathy (FFP/Platelets). Arrange urgent endoscopy.",
+        "Critical Contraindications": "⚠️ Avoid over-transfusion; target Hb ~7-8 g/dL to avoid raising portal pressure."
+    },
+    "Status Epilepticus": {
+        "Immediate First Action": "• Protect airway, place in lateral recumbent position, and administer O2. Check capillary blood glucose.",
+        "Clinical Work Protocol": "• First-line: IV Benzodiazepines (Lorazepam 4mg or Diazepam 10mg). Second-line: IV Levetiracetam or Fosphenytoin.",
+        "Critical Contraindications": "⚠️ Do not place objects (tongue depressors) in the patient's mouth during active seizures."
+    },
+    "Acute Agitated/Violent Patient": {
+        "Immediate First Action": "• Ensure staff safety (keep exit clear). Use verbal de-escalation techniques first.",
+        "Clinical Work Protocol": "• Pharmacological restraint: IM Haloperidol (5mg) + Promethazine (25mg) or Olanzapine (10mg). Maintain close ECG monitoring for QTc prolongation.",
+        "Critical Contraindications": "⚠️ Avoid physical restraint as the first option; use it only as a last resort to prevent patient/staff injury."
+    },
+    "Suspected Drug Overdose (Toxidromes)": {
+        "Immediate First Action": "• Manage ABCs. If opioid suspected, give Naloxone (0.4mg IV). If hypoglycemia, give Dextrose.",
+        "Clinical Work Protocol": "• Activated charcoal if ingestion within 1 hour. Specific antidotes: N-acetylcysteine (Paracetamol), Naloxone (Opioids), Benzodiazepines (for stimulant toxicity).",
+        "Critical Contraindications": "⚠️ Do not induce emesis (vomiting) as it increases the risk of aspiration pneumonia."
     }
 }
 
@@ -509,13 +529,13 @@ EMERGENCY_DRUGS_DB = {
     },
     "A.R.V Vaccine": {
         "Clinical Indication": "Immediate post-exposure active immunization following suspected rabid animal bites or scratches.",
-        "Acute Dosage": "• Inject a 1ml dose Intramuscularly (IM) into the deltoid muscle on days 0, 3, 7, and 14.",
+        "Acute Dosage": "• Inject a 1ml dose Intramuscularly (IM) into the deltoid muscle on days 0, 3, 7, and 14. or two doses at first day and 7,21 ",
         "Critical Warnings": " Never inject into the gluteal region due to poor adipose drug absorption. Never mix with RIG in the same syringe.",
         "Drug Interactions": "High-dose systemic corticosteroids impair antibody production cascade responses to the vaccine."
     },
     "A.R IG": {
         "Clinical Indication": "Passive immediate viral neutralization following high-risk suspected rabid animal exposures (Category III wounds).",
-        "Acute Dosage": "• Infiltrate the entire calculated dose (20 IU/kg for human RIG) deeply into and directly around all wound edges.",
+        "Acute Dosage": "• Infiltrate the entire calculated dose (20 IU/kg for human RIG) deeply into and directly around all wound edges (kg / 15 = #sy).",
         "Critical Warnings": " Any remaining volume not matching the wound margins must be injected IM at an anatomical site distant from the vaccine.",
         "Drug Interactions": "Do not administer at the same anatomical site or in the same syringe as the active Rabies Vaccine."
     },
@@ -674,7 +694,7 @@ LAB_INTERPRETATION_GUIDE = {
         "High": "🔴 Potential Etiologies: Advanced hepatic disease, vitamin K deficiency.",
         "Low": "🔵 Potential Etiologies: Hypercoagulable states."
     },
-    "aPTT": {
+    "PTT (Partial Thromboplastin Time)": {
         "Overview": "Evaluates intrinsic and common pathways; monitors Heparin therapy.",
         "High": "🔴 Potential Etiologies: Unfractionated Heparin therapy, Hemophilia.",
         "Low": "🔵 Potential Etiologies: Acute phase response."
@@ -897,7 +917,7 @@ if 'streamlit' in sys.modules:
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
         html, body, [class*="css"] { font-family: 'Cairo', sans-serif; text-align: right; }
-        div[data-testid="stExpander"] { border: 1px solid #333333; border-radius: 6px; background-color: #1A1D24; margin-bottom: 8px; }
+        div[data-testid="stExpander"] { border: 1px solid #333333; border-radius: 6px; margin-bottom: 8px; }
         </style>
         """, unsafe_allow_html=True)
     # الرابط الخاص بك
@@ -979,27 +999,11 @@ if 'streamlit' in sys.modules:
 
 
         # Distribute medical conditions across three full-width open tabs
-        tab_bites, tab_surgical, tab_medical = st.tabs([
-            "Bites, Stings & Acute Poisoning",
+        tab_medical,tab_surgical, tab_bites  = st.tabs([
+            "Acute Medical & Cardiac Emergencies",
             "Surgical, Trauma & Shock",
-            "Acute Medical & Cardiac Emergencies"
+            "Bites, Stings & Acute Poisoning"
         ])
-
-        # --- : Bites, Stings & Acute Poisoning ---
-        with tab_bites:
-            # Full-width presentation stretching across the layout
-            render_emergency_card("Snake Bites (Venomous)")
-            render_emergency_card("Animal/Dog Bites (Suspected Rabies)")
-            render_emergency_card("Scorpion Stings")
-            render_emergency_card("Anaphylactic Shock")
-
-        # ---: Surgical, Trauma & Shock ---
-        with tab_surgical:
-            render_emergency_card("Hemorrhagic Shock")
-            render_emergency_card("Open & Comminuted Fractures")
-            render_emergency_card("Traumatic Brain & Spinal Cord Injuries")
-            render_emergency_card("Severe & Extensive Burns (>15%)")
-
         # --- : Acute Medical & Cardiac Emergencies ---
         with tab_medical:
             render_emergency_card("Acute Myocardial Infarction (STEMI)")
@@ -1008,6 +1012,26 @@ if 'streamlit' in sys.modules:
             render_emergency_card("Acute Ischemic Stroke")
             render_emergency_card("Status Asthmaticus")
             render_emergency_card("Acute Pulmonary Edema")
+            render_emergency_card("Upper Gastrointestinal Bleed (UGIB)")
+            render_emergency_card("Acute Pancreatitis")
+            render_emergency_card("Status Epilepticus")
+            render_emergency_card("Hypertensive Emergency")
+            render_emergency_card("Acute Agitated/Violent Patient")
+            render_emergency_card("Suspected Drug Overdose (Toxidromes)")
+
+            # ---: Surgical, Trauma & Shock ---
+        with tab_surgical:
+            render_emergency_card("Hemorrhagic Shock")
+            render_emergency_card("Open & Comminuted Fractures")
+            render_emergency_card("Traumatic Brain & Spinal Cord Injuries")
+            render_emergency_card("Severe & Extensive Burns (>15%)")
+            # --- : Bites, Stings & Acute Poisoning ---
+        with tab_bites:
+            # Full-width presentation stretching across the layout
+            render_emergency_card("Snake Bites (Venomous)")
+            render_emergency_card("Animal/Dog Bites (Suspected Rabies)")
+            render_emergency_card("Scorpion Stings")
+            render_emergency_card("Anaphylactic Shock")
 
     # ==============================================================================
     # ---------------------PHARMACY DEPARTMENT------------------------
@@ -1016,21 +1040,13 @@ if 'streamlit' in sys.modules:
         st.header("🚑 Emergency Pharmacy & Critical Dosage Guide")
         st.subheader("مستشفى بغداد التعليمي - جرد وجدول أدوية صيدلية الطوارئ 2026")
 
-        # حقل البحث اللحظي فائق السرعة
-        search_drug = st.text_input(
-            "🔍 ابحث عن دواء، أمبول، أو محلول وريدي طارئ داخل الصيدلية الحية:",
-            placeholder="مثال: Adrenaline, Normal Saline, Ringer, Ceftriaxone...",
-            key="emergency_drug_search_bar"
-        )
-
 
         # دالة معالجة وعرض بطاقة الدواء
         def render_drug_card(drug_name):
             info = EMERGENCY_DRUGS_DB.get(drug_name)
             if info is None:
                 return
-            if search_drug and search_drug.lower() not in drug_name.lower():
-                return
+
 
             with st.expander(f"🧪 {drug_name}", expanded=False):
                 st.markdown(
@@ -1046,16 +1062,28 @@ if 'streamlit' in sys.modules:
             # توزيع كافة محتويات الملف على ألسنة تبويب تخصصية متناسقة وهندسية
 
 
-        tab_cardio, tab_resp, tab_endocrine, tab_neuro, tab_gi_renal, tab_supplies = st.tabs([
-            "🫀 Cardiovascular & Thrombolytics",
-            "🫁 Respiratory & Steroids",
-            "🩸 Endocrine & Diabetes",
-            "🧠 Neurology & Analgesics",
-            "🧪 GI, Antimicrobials & Fluid Electrolytes",
-            "💉 Antidotes, Vaccines & Core Fluids"
+        tab_antibiotics , tab_cardio, tab_resp, tab_endocrine, tab_neuro, tab_gi_renal, tab_supplies,tab_others = st.tabs([
+            "antibiotics & antivirals",
+            " Cardiovascular & Thrombolytics",
+            " Respiratory & Steroids",
+            " Endocrine & Diabetes",
+            " Neurology & Analgesics",
+            " GI, Antimicrobials ",
+            " Fluid Electrolytes",
+            " Antidotes, Vaccines & Core Fluids"
+
         ], width="stretch")
 
         # --- 1. الأدوية القلبية والوعائية ---
+        with tab_antibiotics:
+            render_drug_card("Ceftriaxone Vial")
+            render_drug_card("Vancomycin Vial")
+            render_drug_card("Amoxicillin Vial")
+            render_drug_card("Gentamicin amp")
+            render_drug_card("Ciprofloxacin Vial")
+            render_drug_card("Metronidazole bott.")
+            render_drug_card("Acyclovir Vial")
+            render_drug_card("Tenofovir cap")
         with tab_cardio:
             render_drug_card("Adrenaline amp")
             render_drug_card("Amiodarone amp")
@@ -1125,19 +1153,18 @@ if 'streamlit' in sys.modules:
                 render_drug_card("Hypertonic amp")
                 render_drug_card("Sod. Bicarb amp")
                 render_drug_card("Mg Sulphate amp")
-                render_drug_card("Ceftriaxone Vial")
-                render_drug_card("Vancomycin Vial")
-                render_drug_card("Amoxicillin Vial")
-                render_drug_card("Gentamicin amp")
-                render_drug_card("Ciprofloxacin Vial")
-                render_drug_card("Metronidazole bott.")
-                render_drug_card("Acyclovir Vial")
                 render_drug_card("H.T Saline 3% bott.")
-                render_drug_card("Tenofovir cap")
+
                 render_drug_card("Charcoal Powder  ")
 
-            # --- 6. الترياقات واللقاحات والمحاليل الوريدية التخصصية ---
             with tab_supplies:
+                render_drug_card("Normal Saline (N\\S 500 ml / N\\S 100 ml)")
+                render_drug_card("Glucose Saline (G\\S 500 ml)")
+                render_drug_card("Glucose Water (G\\W 500 ml)")
+                render_drug_card("Ringer's Solution / Ringer's Lactate")
+                render_drug_card("Mannitol Solution")
+
+            with tab_others:
                 render_drug_card("Anti Snake amp")
                 render_drug_card("Anti Scorpion amp")
                 render_drug_card("A.R.V Vaccine")
@@ -1158,12 +1185,6 @@ if 'streamlit' in sys.modules:
                 render_drug_card("Fucidin oint.")
                 render_drug_card("Flamazine oint.")
                 render_drug_card("Xylocaine oint.")
-                # إدراج وتفكيك المحاليل الرئيسية في علامة التبويب السادسة
-                render_drug_card("Normal Saline (N\\S 500 ml / N\\S 100 ml)")
-                render_drug_card("Glucose Saline (G\\S 500 ml)")
-                render_drug_card("Glucose Water (G\\W 500 ml)")
-                render_drug_card("Ringer's Solution / Ringer's Lactate")
-                render_drug_card("Mannitol Solution")
 
             st.write("---")
     # ==============================================================================
@@ -1217,26 +1238,28 @@ if 'streamlit' in sys.modules:
                                 <p style="color: white; font-weight: 400; font-size: 14px; margin: 0;">{interpretation['Low']}</p>
                             </div>
                             """, unsafe_allow_html=True)
-        # Distribute the diagnostic profiles across five full-width open specialist tabs
+
+
+        # --- تجميع وتنسيق الصفحات (Tabs) ---
         sub_tab_hematology, sub_tab_renal, sub_tab_cardiac, sub_tab_abg, sub_tab_liver = st.tabs([
-            "🩸 Hematology & Coagulation",
-            "🧼 Renal Function & Electrolytes",
-            "🫀 Cardiac Biomarkers & Inflammation",
-            "🫁 Blood Gas & Metabolism",
-            "🧪 Hepatic & Pancreatic Profiles"
+            " Hematology",
+            " Renal & Electrolytes",
+            " Cardiac & Inflammation",
+            " Blood Gas & Metabolism",
+            " Hepatic & Pancreatic"
         ])
 
-        # --- 1. Hematology & Coagulation Panel ---
+        # --- 1. Hematology Panel ---
         with sub_tab_hematology:
             render_pure_test_card("CBC - Hemoglobin (Hb)")
             render_pure_test_card("Platelets")
-            render_pure_test_card("INR")
+            render_pure_test_card("INR (International Normalized Ratio)")
             render_pure_test_card("WBC (White Blood Cells)")
-            render_pure_test_card("Prothrombin Time (PT)")
-            render_pure_test_card("aPTT")
+            render_pure_test_card("PT (Prothrombin Time)")
+            render_pure_test_card("PTT (Partial Thromboplastin Time)")
             render_pure_test_card("D-Dimer")
 
-        # --- 2. Renal Function & Electrolytes Panel ---
+        # --- 2. Renal & Electrolytes Panel ---
         with sub_tab_renal:
             render_pure_test_card("S. Creatinine")
             render_pure_test_card("Serum Potassium (K+)")
@@ -1245,12 +1268,12 @@ if 'streamlit' in sys.modules:
             render_pure_test_card("Serum Sodium (Na+)")
             render_pure_test_card("Total Serum Calcium (Ca++)")
 
-        # --- 3. Cardiac Biomarkers & Inflammation Panel ---
+        # --- 3. Cardiac Panel ---
         with sub_tab_cardiac:
             render_pure_test_card("Troponin I")
             render_pure_test_card("NT-proBNP")
             render_pure_test_card("CK-MB")
-            render_pure_test_card("C-Reactive Protein (CRP)")
+            render_pure_test_card("CRP (C-Reactive Protein)")
 
         # --- 4. Blood Gas & Metabolism Panel ---
         with sub_tab_abg:
@@ -1260,7 +1283,7 @@ if 'streamlit' in sys.modules:
             render_pure_test_card("pCO2")
             render_pure_test_card("Lactate")
 
-        # --- 5. Hepatic & Pancreatic Profiles Panel ---
+        # --- 5. Hepatic & Pancreatic Profiles ---
         with sub_tab_liver:
             render_pure_test_card("ALT (SGPT)")
             render_pure_test_card("Total Bilirubin")

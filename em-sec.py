@@ -1038,8 +1038,6 @@ if 'streamlit' in sys.modules:
     # ==============================================================================
     if st.session_state.current_page == "Pharmacy":
         st.header("🚑 Emergency Pharmacy & Critical Dosage Guide")
-        st.subheader("مستشفى بغداد التعليمي - أدوية صيدلية الطوارئ ")
-
 
         # دالة معالجة وعرض بطاقة الدواء
         def render_drug_card(drug_name):

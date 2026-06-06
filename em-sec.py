@@ -1038,7 +1038,7 @@ if 'streamlit' in sys.modules:
     # ==============================================================================
     if st.session_state.current_page == "Pharmacy":
         st.header("🚑 Emergency Pharmacy & Critical Dosage Guide")
-        st.subheader("مستشفى بغداد التعليمي - جرد وجدول أدوية صيدلية الطوارئ 2026")
+        st.subheader("مستشفى بغداد التعليمي - أدوية صيدلية الطوارئ ")
 
 
         # دالة معالجة وعرض بطاقة الدواء
@@ -1192,7 +1192,7 @@ if 'streamlit' in sys.modules:
     # ==============================================================================
 
     elif st.session_state.current_page == "Laboratory":
-        st.header(" Real-Time Laboratory Test Management & Interpretation System")
+        st.header("Laboratory Test Management & Interpretation System")
 
 
         def render_pure_test_card(test_name):

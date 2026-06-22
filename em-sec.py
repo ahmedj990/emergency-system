@@ -181,7 +181,7 @@ EMERGENCY_DRUGS_DB = {
     },
     "Dobutamine amp": {
         "Clinical Indication": "Short-term management of acute decompensated heart failure and cardiogenic shock due to depressed myocardial contractility.",
-        "Acute Dosage": "•(20ml amp=250 mg, ml = 12.5 mg=1250 mcg) Continuous IV infusion at 2 to 20 mcg/kg/min titrated based on cardiac output and systemic vascular resistance.",
+        "Acute Dosage": "•(20ml amp=250 mg ... 1 ml = 12.5 mg=12500 mcg) Continuous IV infusion at 2 to 20 mcg/kg/min titrated based on cardiac output and systemic vascular resistance.",
         "Critical Warnings": "Can induce severe tachyarrhythmias and exacerbate myocardial ischemia by increasing oxygen demand.",
         "Drug Interactions": "Beta-blockers can directly antagonize the positive inotropic effects of dobutamine."
     },

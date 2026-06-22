@@ -175,13 +175,13 @@ EMERGENCY_DRUGS_DB = {
     },
     "Dopamine amp": {
         "Clinical Indication": "Hemodynamically significant hypotension or cardiogenic shock refractory to intravenous fluid resuscitation.",
-        "Acute Dosage": "• Continuous IV infusion via a central line at 2 to 20 mcg/kg/min, titrated to maintain target mean arterial pressure (MAP).",
+        "Acute Dosage": "•(amp 5ml =200mg=200000mcg , 1ml =40 mg=40 mcg) Continuous IV infusion via a central line at 2 to 20 mcg/kg/min, titrated to maintain target mean arterial pressure (MAP).",
         "Critical Warnings": "Extravasation causes severe local tissue necrosis. Direct antidote is phentolamine infiltration.",
         "Drug Interactions": "MAO inhibitors significantly prolong and intensify the pressor effects of dopamine."
     },
     "Dobutamine amp": {
         "Clinical Indication": "Short-term management of acute decompensated heart failure and cardiogenic shock due to depressed myocardial contractility.",
-        "Acute Dosage": "• Continuous IV infusion at 2 to 20 mcg/kg/min titrated based on cardiac output and systemic vascular resistance.",
+        "Acute Dosage": "•(20ml amp=250 mg, ml = 12.5 mg=1250 mcg) Continuous IV infusion at 2 to 20 mcg/kg/min titrated based on cardiac output and systemic vascular resistance.",
         "Critical Warnings": "Can induce severe tachyarrhythmias and exacerbate myocardial ischemia by increasing oxygen demand.",
         "Drug Interactions": "Beta-blockers can directly antagonize the positive inotropic effects of dobutamine."
     },
@@ -445,7 +445,7 @@ EMERGENCY_DRUGS_DB = {
     },
     "Sod. Bicarb amp": {
         "Clinical Indication": "Severe metabolic acidosis (pH <7.1), hyperkalemic cardiac arrest, and tricyclic antidepressant (TCA) toxic overdose.",
-        "Acute Dosage": "• 50 mEq (1 ampule of 8.4%) slow IV push, repeatable based on serial arterial blood gas (ABG) monitoring.",
+        "Acute Dosage": "•(10ml amp=0.84 g=8.4%= 10 mEq) • 1 mEq/kg slow IV push, repeatable based on serial arterial blood gas (ABG) monitoring.",
         "Critical Warnings": "Highly hypertonic; precipitates immediate chemical inactivation if mixed directly with catecholamines or calcium.",
         "Drug Interactions": "Alkalinization of urine accelerates the clearance of salicylates and phenobarbital."
     },
@@ -517,7 +517,7 @@ EMERGENCY_DRUGS_DB = {
     },
     "Anti Snake amp": {
         "Clinical Indication": "Immediate neutralization of circulating venom following bites by venomous snakes with systemic toxicity signs.",
-        "Acute Dosage": "• Reconstitute 5 to 10 vials(10ml amp =500 LD50) immediately, dilute in 250–500ml of Normal Saline, and infuse intravenously over 30–60 minutes.",
+        "Acute Dosage": "•(10ml amp =500 LD50) Reconstitute 5 to 10 vials immediately, dilute in 250–500ml of Normal Saline, and infuse intravenously over 30–60 minutes.",
         "Critical Warnings": " Exceptionally high risk of type-I anaphylactic shock. Epinephrine must be drawn and available at the bedside.",
         "Drug Interactions": "Pre-treatment with antihistamines does not reliably prevent anti-venom anaphylaxis; never replace epinephrine readiness."
     },
@@ -553,7 +553,7 @@ EMERGENCY_DRUGS_DB = {
     },
     "Naloxone Amp": {
         "Clinical Indication": "Complete or partial reversal of opioid-induced respiratory depression and toxic overdose.",
-        "Acute Dosage": "• 0.4mg to 2mg IV (or IM/SC), repeatable every 2–3 minutes if desired respiratory baseline is not achieved.",
+        "Acute Dosage": "•(1ml amp=0.4 mg) 0.4mg to 2mg IV (or IM/SC), repeatable every 2–3 minutes if desired respiratory baseline is not achieved.",
         "Critical Warnings": "In opioid-dependent individuals, it abruptly precipitates an acute, severe withdrawal syndrome with extreme agitation.",
         "Drug Interactions": "Acts as a direct, competitive antagonist across central opioid receptors, reversing all narcotic analgesia."
     },
@@ -571,7 +571,7 @@ EMERGENCY_DRUGS_DB = {
     },
     "Protamine Amp": {
         "Clinical Indication": "Specific immediate neutralizing antidote to reverse life-threatening hemorrhage induced by Unfractionated Heparin toxicity.",
-        "Acute Dosage": "• 1mg of Protamine neutralizes approximately 100 units of Heparin; administer via very slow IV infusion not exceeding 50mg over 10 minutes.",
+        "Acute Dosage": "• (5ml amp=50mg=5000IU)1mg of Protamine neutralizes approximately 100 units of Heparin; administer via very slow IV infusion not exceeding 50mg over 10 minutes.",
         "Critical Warnings": " Hyper-rapid infusion can precipitate catastrophic systemic hypotension, severe bradycardia, and acute pulmonary vasoconstriction.",
         "Drug Interactions": "Forms an inert chemical salt complex when binding in vivo with circulating Heparin molecules."
     },
@@ -1229,7 +1229,6 @@ if 'streamlit' in sys.modules:
                                 <p style="color: white; font-weight: 400; font-size: 14px; margin: 0;">{interpretation['High']}</p>
                             </div>
                             """, unsafe_allow_html=True)
-
                 with col2:
                     st.markdown(f"""
                             <div style="background-color: #00008B; padding: 12px; border-radius: 10px; color: white;">
@@ -1298,3 +1297,4 @@ if __name__ == "__main__":
     # تشغيل النفق فقط إذا لم يكن السكربت مشغلاً بواسطة streamlit
     if "streamlit" not in sys.modules:
         run_streamlit_and_tunnel()
+        

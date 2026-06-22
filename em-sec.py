@@ -11,9 +11,9 @@ import logging
 # إخفاء التنبيهات غير الضرورية
 logging.getLogger("streamlit.runtime.scriptrunner.script_runner").setLevel(logging.ERROR)
 
-# ==============================================================================
+# ========================================================================
 # [1] الإعدادات والثوابت
-# ==============================================================================
+# ========================================================================
 PORT = "8502"
 USERS_TRACKER = "active_staff.txt"
 TUNNEL_FILE = "tunnel_url.txt"
@@ -26,9 +26,9 @@ try:
 except ImportError:
     HAS_QR = False
 
-# ==============================================================================
-# [2] قواعد البيانات الطبية (تم الحفاظ عليها بالكامل دون تغيير)
-# ==============================================================================
+# ========================================================================
+# [2] قواعد البيانات الطبية
+# ========================================================================
 
 EMERGENCY_CASES_DB = {
     "Snake Bites (Venomous)": {
@@ -517,7 +517,7 @@ EMERGENCY_DRUGS_DB = {
     },
     "Anti Snake amp": {
         "Clinical Indication": "Immediate neutralization of circulating venom following bites by venomous snakes with systemic toxicity signs.",
-        "Acute Dosage": "• Reconstitute 5 to 10 vials immediately, dilute in 250–500ml of Normal Saline, and infuse intravenously over 30–60 minutes.",
+        "Acute Dosage": "• Reconstitute 5 to 10 vials(10ml amp =500 LD50) immediately, dilute in 250–500ml of Normal Saline, and infuse intravenously over 30–60 minutes.",
         "Critical Warnings": " Exceptionally high risk of type-I anaphylactic shock. Epinephrine must be drawn and available at the bedside.",
         "Drug Interactions": "Pre-treatment with antihistamines does not reliably prevent anti-venom anaphylaxis; never replace epinephrine readiness."
     },
@@ -529,19 +529,19 @@ EMERGENCY_DRUGS_DB = {
     },
     "A.R.V Vaccine": {
         "Clinical Indication": "Immediate post-exposure active immunization following suspected rabid animal bites or scratches.",
-        "Acute Dosage": "• Inject a 1ml dose Intramuscularly (IM) into the deltoid muscle on days 0, 3, 7, and 14. or two doses at first day and 7,21 ",
+        "Acute Dosage": "• Inject a 1ml=~2.5IU dose Intramuscularly (IM) into the deltoid muscle on days 0, 3, 7, and 14. or two doses at first day and 7,21 ",
         "Critical Warnings": " Never inject into the gluteal region due to poor adipose drug absorption. Never mix with RIG in the same syringe.",
         "Drug Interactions": "High-dose systemic corticosteroids impair antibody production cascade responses to the vaccine."
     },
     "A.R IG": {
         "Clinical Indication": "Passive immediate viral neutralization following high-risk suspected rabid animal exposures (Category III wounds).",
-        "Acute Dosage": "• Infiltrate the entire calculated dose (20 IU/kg for human RIG) deeply into and directly around all wound edges (kg / 15 = #sy).",
+        "Acute Dosage": "• Infiltrate the entire calculated dose (20 IU/kg for human RIG) deeply into and directly around all wound edges (syringe -2ml- = 300 IU ... kg / 15 = NO of syringes).",
         "Critical Warnings": " Any remaining volume not matching the wound margins must be injected IM at an anatomical site distant from the vaccine.",
         "Drug Interactions": "Do not administer at the same anatomical site or in the same syringe as the active Rabies Vaccine."
     },
     "A.T IG / ATS": {
         "Clinical Indication": "Immediate passive immunization and toxin neutralization for contaminated or deep devitalized injuries in non-immunized patients.",
-        "Acute Dosage": "• Administer Tetanus Toxoid booster AND administer Human Tetanus Immune Globulin (HTIG) 250 IU IM into opposite limbs.",
+        "Acute Dosage": "• Administer Tetanus Toxoid booster AND administer Human Tetanus Immune Globulin (HTIG) syringe = 250 IU IM into opposite limbs.",
         "Critical Warnings": " Always inject the Tetanus vaccine booster and the Immunoglobulin at completely separate anatomical sites to prevent in-vivo neutralization.",
         "Drug Interactions": "Active chemotherapy or immunosuppression lowers the long-term antibody synthesis response."
     },
@@ -837,9 +837,9 @@ LAB_TESTS_CONFIG = {
 }
 
 
-# ==============================================================================
+# ========================================================================
 # [3] وظائف التحكم الخلفية (تتبع المستخدم والنفق)
-# ==============================================================================
+# ========================================================================
 
 def track_user_activity():
     """وظيفة لتسجيل نشاط المستخدم الحالي في الملف"""
@@ -901,9 +901,9 @@ def run_streamlit_and_tunnel():
     webbrowser.open(f"http://localhost:{PORT}")
 
 
-# ==============================================================================
+# ========================================================================
 # [4] واجهة Streamlit (نظام العرض)
-# ==============================================================================
+# ==========================================================ي=============
 
 if 'streamlit' in sys.modules:
     import streamlit as st
@@ -972,9 +972,9 @@ if 'streamlit' in sys.modules:
     if m3.button("🔬 Laboratory", use_container_width=True): st.session_state.current_page = "Laboratory"
     st.write("---")
 
-    # ==============================================================================
+    # ======================================================================
     # ------------------------Common Emergency Conditions Home---------------------------
-    # ==============================================================================
+    # =======================================================================
 
     if st.session_state.current_page == "Common Conditions":
         st.header("🚑 Common Conditions & Immediate Management System")
@@ -999,7 +999,7 @@ if 'streamlit' in sys.modules:
 
 
         # Distribute medical conditions across three full-width open tabs
-        tab_medical,tab_surgical, tab_bites  = st.tabs([
+        tab_medical, tab_surgical, tab_bites = st.tabs([
             "Acute Medical & Cardiac Emergencies",
             "Surgical, Trauma & Shock",
             "Bites, Stings & Acute Poisoning"
@@ -1033,18 +1033,18 @@ if 'streamlit' in sys.modules:
             render_emergency_card("Scorpion Stings")
             render_emergency_card("Anaphylactic Shock")
 
-    # ==============================================================================
+    # =======================================================================
     # ---------------------PHARMACY DEPARTMENT------------------------
-    # ==============================================================================
+    # =======================================================================
     if st.session_state.current_page == "Pharmacy":
         st.header("🚑 Emergency Pharmacy & Critical Dosage Guide")
+
 
         # دالة معالجة وعرض بطاقة الدواء
         def render_drug_card(drug_name):
             info = EMERGENCY_DRUGS_DB.get(drug_name)
             if info is None:
                 return
-
 
             with st.expander(f"🧪 {drug_name}", expanded=False):
                 st.markdown(
@@ -1060,17 +1060,18 @@ if 'streamlit' in sys.modules:
             # توزيع كافة محتويات الملف على ألسنة تبويب تخصصية متناسقة وهندسية
 
 
-        tab_antibiotics , tab_cardio, tab_resp, tab_endocrine, tab_neuro, tab_gi_renal, tab_supplies,tab_others = st.tabs([
-            "antibiotics & antivirals",
-            " Cardiovascular & Thrombolytics",
-            " Respiratory & Steroids",
-            " Endocrine & Diabetes",
-            " Neurology & Analgesics",
-            " GI, Antimicrobials ",
-            " Fluid Electrolytes",
-            " Antidotes, Vaccines & Core Fluids"
+        tab_antibiotics, tab_cardio, tab_resp, tab_endocrine, tab_neuro, tab_gi_renal, tab_supplies, tab_others = st.tabs(
+            [
+                "antibiotics & antivirals",
+                " Cardiovascular & Thrombolytics",
+                " Respiratory & Steroids",
+                " Endocrine & Diabetes",
+                " Neurology & Analgesics",
+                " GI, Antimicrobials ",
+                " Fluid Electrolytes",
+                " Antidotes, Vaccines & Core Fluids"
 
-        ], width="stretch")
+            ], width="stretch")
 
         # --- 1. الأدوية القلبية والوعائية ---
         with tab_antibiotics:
@@ -1185,12 +1186,12 @@ if 'streamlit' in sys.modules:
                 render_drug_card("Xylocaine oint.")
 
             st.write("---")
-    # ==============================================================================
+    # =======================================================================
     # ---------------------LABORATORY DEPARTMENT-------------------
-    # ==============================================================================
+    # =======================================================================
 
     elif st.session_state.current_page == "Laboratory":
-        st.header("Laboratory Test Management & Interpretation System")
+        st.header(" Real-Time Laboratory Test Management & Interpretation System")
 
 
         def render_pure_test_card(test_name):
@@ -1290,9 +1291,9 @@ if 'streamlit' in sys.modules:
             render_pure_test_card("Serum Amylase")
 
     st.write("---")
-# ==============================================================================
+# =========================================================================
 # [5] نقطة انطلاق النظام (Main)
-# ==============================================================================
+# =========================================================================
 if __name__ == "__main__":
     # تشغيل النفق فقط إذا لم يكن السكربت مشغلاً بواسطة streamlit
     if "streamlit" not in sys.modules:

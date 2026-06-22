@@ -77,9 +77,9 @@ EMERGENCY_CASES_DB = {
         "Critical Contraindications": "⚠️ Strictly Prohibited: Do not administer Aspirin, Heparin, or any antiplatelets/anticoagulants in the ER prior to reviewing the non-contrast Brain CT scan to eliminate hemorrhagic stroke."
     },
     "Diabetic Ketoacidosis (DKA)": {
-        "Immediate First Action": "• Establish robust IV access and initiate rapid volume expansion using Normal Saline (0.9% NaCl) to correct profound intracellular dehydration and restore renal perfusion.",
-        "Clinical Work Protocol": "• Draw immediate stat labs (serum glucose, electrolytes, ABG/VBG for pH, and serum ketones).\n• Initiate a continuous intravenous insulin infusion at a rate of 0.1 units/kg/hr, provided that serum Potassium level is verified to be >3.3 mEq/L.\n• Continuous potassium replacement matching fluid protocols.",
-        "Critical Contraindications": "⚠️ CRITICAL WARNING: Never initiate insulin therapy if serum Potassium is <3.3 mEq/L. Insulin will shift potassium intracellularly, precipitating catastrophic cardiac arrhythmias or sudden cardiac arrest."
+        "Immediate First Action": "• Establish two large-bore IV lines (16G or 18G).\n• Initiate rapid hydration with 0.9% Normal Saline (15–20 mL/kg/hr) to restore circulating volume and renal perfusion.",
+        "Clinical Work Protocol": "• STAT Lab Panel: Glucose, electrolytes, BUN, Creatinine, VBG/ABG (pH), serum ketones (beta-hydroxybutyrate), and ECG.\n• Insulin Therapy: Start continuous regular insulin infusion at 0.1 units/kg/hr.\n• Glucose/Fluid Adjustment: When blood glucose reaches 250 mg/dL, add 5% Dextrose to the IV fluids (D5 1/2 NS) while continuing insulin infusion.\n• Potassium Management: Add 20–30 mEq of Potassium (KCl) to each liter of IV fluid if K+ is between 3.3 and 5.2 mEq/L.",
+        "Critical Contraindications": "⚠️ WARNING: Do not initiate insulin if Serum K+ < 3.3 mEq/L. You must replace potassium first to prevent life-threatening cardiac arrhythmias and arrest. \n⚠️ WARNING: Avoid rapid fluid over-correction to prevent cerebral edema.\n⚠️ WARNING: Avoid routine bicarbonate administration unless pH < 6.9."
     },
     "Status Asthmaticus": {
         "Immediate First Action": "• Position the patient in an upright, high-Fowler's position and administer high-flow oxygen via a non-rebreather face mask.",
@@ -912,7 +912,7 @@ if 'streamlit' in sys.modules:
     track_user_activity()
 
     # --- إعدادات الواجهة ---
-    st.set_page_config(page_title="مستشفى بغداد - قسم الطوارئ", layout="wide")
+    st.set_page_config(page_title=" Baghdad Teaching Hospital / Emergency Department", layout="wide")
     st.markdown("""
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
@@ -965,7 +965,7 @@ if 'streamlit' in sys.modules:
     # --- محتوى الصفحة الرئيسي ---
     if "current_page" not in st.session_state: st.session_state.current_page = "Common Conditions"
 
-    st.title("🏥 قسم الطوارئ / مستشفى بغداد التعليمي")
+    st.title(" Baghdad Teaching Hospital / Emergency Department")
     m1, m2, m3 = st.columns(3)
     if m1.button("🏠 Common Conditions", use_container_width=True): st.session_state.current_page = "Common Conditions"
     if m2.button("💊 Pharmacy", use_container_width=True): st.session_state.current_page = "Pharmacy"

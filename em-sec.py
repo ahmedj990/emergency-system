@@ -181,7 +181,7 @@ EMERGENCY_DRUGS_DB = {
     },
     "Dobutamine amp": {
         "Clinical Indication": "Short-term management of acute decompensated heart failure and cardiogenic shock due to depressed myocardial contractility.",
-        "Acute Dosage": "•(20ml amp=250 mg ... 1 ml = 12.5 mg=12500 mcg) Continuous IV infusion at 2 to 20 mcg/kg/min titrated based on cardiac output and systemic vascular resistance.",
+        "Acute Dosage": "•(20ml amp=250 mg, ml = 12.5 mg=1250 mcg) Continuous IV infusion at 2 to 20 mcg/kg/min or 120 to 1200 mcg/kg/hr titrated based on cardiac output and systemic vascular resistance.",
         "Critical Warnings": "Can induce severe tachyarrhythmias and exacerbate myocardial ischemia by increasing oxygen demand.",
         "Drug Interactions": "Beta-blockers can directly antagonize the positive inotropic effects of dobutamine."
     },
@@ -1229,6 +1229,7 @@ if 'streamlit' in sys.modules:
                                 <p style="color: white; font-weight: 400; font-size: 14px; margin: 0;">{interpretation['High']}</p>
                             </div>
                             """, unsafe_allow_html=True)
+
                 with col2:
                     st.markdown(f"""
                             <div style="background-color: #00008B; padding: 12px; border-radius: 10px; color: white;">
@@ -1297,4 +1298,3 @@ if __name__ == "__main__":
     # تشغيل النفق فقط إذا لم يكن السكربت مشغلاً بواسطة streamlit
     if "streamlit" not in sys.modules:
         run_streamlit_and_tunnel()
-        

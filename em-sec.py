@@ -253,8 +253,8 @@ EMERGENCY_DRUGS_DB = {
     },
     "Salbutamol Neb. ": {
         "Clinical Indication": "Relief of severe acute bronchospasm in asthma and COPD, and adjunctive therapy to shift potassium in hyperkalemia.",
-        "Acute Dosage": "• Via Nebulization: 2.5 to 5mg diluted in normal saline, repeated as indicated based on clinical response.",
-        "Critical Warnings": "Use with caution in patients with ischemic heart disease as it routinely induces tachycardia and palpitations.",
+        "Acute Dosage": "• Via Nebulization: 2.5 - 5mg (0.5 - 1 ml) for 20-30 min diluted in normal saline 0.9%, repeated as indicated based on clinical response , hyper kalemia : 10-20 mg(2-4ml) for 10 - 15 min",
+        "Critical Warnings": "Use with caution in patients with (heart beats should not exceed 120 beats per min) , (ECG) ischemic heart disease as it routinely induces tachycardia and palpitations , blood glucose and lactate concentrations . ",
         "Drug Interactions": "Beta-blockers directly neutralize its bronchodilatory effects; loop diuretics can worsen hypokalemia."
     },
     "Ipratropium  neb": {
@@ -464,7 +464,7 @@ EMERGENCY_DRUGS_DB = {
     "Vancomycin Vial": {
         "Clinical Indication": "Severe MRSA infections, complicated skin/soft tissue infections, and severe septicemia.",
         "Acute Dosage": "• 15-20 mg/kg intravenously diluted heavily and infused slowly over a minimum duration of 60 minutes.",
-        "Critical Warnings": " Rapid infusion induces 'Red Man Syndrome' (severe histamine-mediated flushing, pruritus, and profound hypotension).",
+        "Critical Warnings": " Dissolve in 250ml N/S 0.9% , Rapid infusion induces 'Red Man Syndrome' (severe histamine-mediated flushing, pruritus, and profound hypotension).",
         "Drug Interactions": "Concurrent administration with aminoglycosides or loop diuretics multiplies risks of nephrotoxicity and ototoxicity."
     },
     "Amoxicillin Vial": {
@@ -475,7 +475,7 @@ EMERGENCY_DRUGS_DB = {
     },
     "Gentamicin amp": {
         "Clinical Indication": "Severe gram-negative systemic infections, complicated urinary tract infections, and infective endocarditis synergism.",
-        "Acute Dosage": "• 5-7 mg/kg intravenously via a single daily dose configuration, infused over 30-60 minutes.",
+        "Acute Dosage": "• 5-7 mg/kg ( amp = 80mg) IM / Intravenously infused over 30-60 min divided 3 dose ( evry 8 hr) .",
         "Critical Warnings": "Possesses severe dose-dependent nephrotoxicity and irreversible ototoxicity. Serial renal function tracking is mandatory.",
         "Drug Interactions": "Synergistic toxicity cascades if given alongside Furosemide or Vancomycin."
     },
